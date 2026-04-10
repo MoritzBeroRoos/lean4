@@ -24,11 +24,6 @@ theorem Iter.takeWhile_eq {α β} [Iterator α Id β] {P}
     it.takeWhile P = (it.toIterM.takeWhile P).toIter :=
   rfl
 
-/-
-PLOG(step_takeWhile):
-implicitized `IterM.takeWhile`
--/
-
 theorem Iter.step_takeWhile {α β} [Iterator α Id β] {P}
     {it : Iter (α := α) β} :
     (it.takeWhile P).step = (match it.step with
@@ -112,12 +107,6 @@ theorem Iter.atIdxSlow?_takeWhile {α β}
     simp only [atIdxSlow?_eq_match (it := it), atIdxSlow?_eq_match (it := it.takeWhile P), h',
       step_takeWhile]
     split <;> rfl
-
-/-
-PLOG(getElem?_takeWhile):
-implicitized `List.get?Internal`
-underlying problem: `List.getElem?_nil` is `rfl`.
--/
 
 private theorem List.getElem?_takeWhile {l : List α} {P : α → Bool} {k} :
     (l.takeWhile P)[k]? = if ∀ k' : Nat, k' ≤ k → l[k']?.any P then l[k]? else none := by

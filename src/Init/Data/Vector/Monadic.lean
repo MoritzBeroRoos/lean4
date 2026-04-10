@@ -154,13 +154,6 @@ theorem idRun_forIn'_yield_eq_foldl
       xs.attach.foldl (fun b ⟨a, h⟩ => f a h b |>.run) init := by
   simp
 
-/-
-PLOG(foIn'_map):
-made `Vector.map` `implicit_reducible`.
-
-Reason: `map_mk` is a `rfl` lemma.
--/
-
 @[simp, grind =] theorem forIn'_map [Monad m] [LawfulMonad m]
     {xs : Vector α n} (g : α → β) (f : (b : β) → b ∈ xs.map g → γ → m (ForInStep γ)) :
     forIn' (xs.map g) init f = forIn' xs init fun a h y => f (g a) (mem_map_of_mem h) y := by

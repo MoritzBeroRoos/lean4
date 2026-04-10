@@ -1165,18 +1165,6 @@ theorem ISize.toInt8_ofIntLE {n} (h₁ h₂) : (ISize.ofIntLE n h₁ h₂).toInt
 set_option allowUnsafeReducibility true
 attribute [implicit_reducible] dite ite -- TODO: move as soon as `inferInstanceAs` has been fixed
 
-/-
-PLOG(toInt8_ofIntTruncate):
-Had to implicitize lots of declarations:
-  dite ite
-  Int16.toInt Int16.neg Int16.ofNat Int16.toBitVec
-  BitVec.toInt BitVec.toNat BitVec.neg
-  Int.add Int.subNatNat Int.sub
-  Bool.decEq
-  Fin.Internal.ofNat
-  Int.neg Int.negOfNat Int.pow
--/
-
 theorem Int16.toInt8_ofIntTruncate {n : Int} (h₁ : -2 ^ 15 ≤ n) (h₂ : n < 2 ^ 15) :
     (Int16.ofIntTruncate n).toInt8 = Int8.ofInt n := by
   rw [← ofIntLE_eq_ofIntTruncate (h₁ := h₁) (h₂ := Int.le_of_lt_add_one h₂)] --, toInt8_ofIntLE]

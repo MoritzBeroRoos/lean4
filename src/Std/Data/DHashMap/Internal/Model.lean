@@ -562,13 +562,6 @@ namespace Const
 
 variable {β : Type v}
 
-/-
-PLOG(alter_eq_alterₘ):
-implicitized `bucket` and `containsₘ`.
-However, note: The proof becomes much simpler if we use `simp -implicitDefEqProofs [containsₘ.eq_1]`
-before the split; in fact, we could just use `rfl` instead of `split` to close the goal.
--/
-
 theorem alter_eq_alterₘ [BEq α] [Hashable α] [EquivBEq α] (m : Raw₀ α (fun _ => β)) (a : α)
     (f : Option β → Option β) : Const.alter m a f = Const.alterₘ m a f := by
     dsimp only [alter, alterₘ, containsₘ, ← bucket_eq]
@@ -596,11 +589,6 @@ theorem modify_eq_modifyₘ [BEq α] [Hashable α] [EquivBEq α] (m : Raw₀ α 
   rw [modify_eq_alter, alter_eq_alterₘ, modifyₘ]
 
 end Const
-
-/-
-PLOG(containsThenInsert_eq_insertₘ):
-implicitized `Array.uget` and `Array.uset`
--/
 
 theorem containsThenInsert_eq_insertₘ [BEq α] [Hashable α] (m : Raw₀ α β) (a : α) (b : β a) :
     (m.containsThenInsert a b).2 = m.insertₘ a b := by

@@ -97,11 +97,6 @@ coinductive_fixpoint monotonicity by
 
 end Definition
 
-/-
-PLOG(prun_liftInner_step):
-implicitized `IterM.stepAsHetT`
--/
-
 @[simp]
 theorem Equivalence.prun_liftInner_step [Iterator α m β] [Monad m] [Monad n]
     [MonadLiftT m n] [LawfulMonad m] [LawfulMonad n] [LawfulMonadLiftT m n]

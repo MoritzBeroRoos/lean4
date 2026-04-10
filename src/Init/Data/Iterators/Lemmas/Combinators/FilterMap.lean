@@ -207,13 +207,6 @@ theorem Iter.step_mapM {f : β → n γ}
   | .skip it' h => rfl
   | .done h => rfl
 
-/-
-PLOG(Iter.step_filterMap):
-The errors seemed almost unsolvable. In particular, `simp` didn't apply `toPure_skip` because
-of type incoherences. The solution: Use `Subtype.ext` and pull `Subtype.val` in to eliminate type
-dependencies.
--/
-
 theorem Iter.step_filterMap {f : β → Option γ} :
     (it.filterMap f).step = match it.step with
       | .yield it' out h =>
@@ -255,11 +248,6 @@ theorem Iter.val_step_filterMap {f : β → Option γ} :
     split <;> simp_all
   · simp
   · simp
-
-/-
-PLOG(Iter.step_map):
-Again, `Subtype.ext`
--/
 
 theorem Iter.step_map {f : β → γ} :
     (it.map f).step = match it.step with

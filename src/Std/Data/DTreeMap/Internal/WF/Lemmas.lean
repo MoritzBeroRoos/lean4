@@ -2032,11 +2032,6 @@ theorem WF.constAlter! {_ : Ord α} {β : Type v} {t : Impl α β} {a f} (h : t.
 ### mergeWith!
 -/
 
-/-
-PLOG(mergeWith_eq_mergeWith!):
-implicitized `SizeBalancedTree.toBalancedTree`
--/
-
 theorem mergeWith_eq_mergeWith! {_ : Ord α} [LawfulEqOrd α] {mergeFn} {t₁ t₂ : Impl α β}
     (h : t₁.Balanced) :
     (mergeWith mergeFn t₁ t₂ h).impl = mergeWith! mergeFn t₁ t₂ := by

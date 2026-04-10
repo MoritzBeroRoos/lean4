@@ -157,18 +157,6 @@ theorem _root_.Array.attachWith_eq_map_attach {xs : Array α} {P : α → Prop} 
     xs.attachWith P H = xs.attach.map fun ⟨x, h⟩ => ⟨x, H _ h⟩ := by
   cases xs <;> simp_all [List.attachWith_eq_map_attach]
 
-/-
-PLOG(attach_push):
-This would profit from `attach_congr` but we can't mark it as `congr`.
-There were some lemmas that were really difficult to apply given the type dependencies.
-Solution: Use a different, simpler proof that normalizes `xs.attachWith` to `xs.attach.map`.
-
-Alternative: Make `Vector.push` implici-reducible and use the old proof:
-```lean
-  simp [Array.map_attach_eq_pmap]
-```
--/
-
 @[simp] theorem attach_push {a : α} {xs : Vector α n} :
     (xs.push a).attach =
       (xs.attach.map (fun ⟨x, h⟩ => ⟨x, mem_push_of_mem a h⟩)).push ⟨a, by simp⟩ := by
@@ -384,13 +372,6 @@ theorem pmap_append' {p : α → Prop} {f : ∀ a : α, p a → β} {xs : Vector
     ((xs ++ ys).pmap f fun a ha => (mem_append.1 ha).elim (h₁ a) (h₂ a)) =
       xs.pmap f h₁ ++ ys.pmap f h₂ :=
   pmap_append _
-
-/-
-PLOG(attach_append):
-* Had to use `Vector.ext`.
-* Had to apply `Vector.getElem_append` before the final `simp` because `simp` would introduce problems.
-Overall, proof was very unergonomic.
--/
 
 @[simp] theorem attach_append {xs : Vector α n} {ys : Vector α m} :
     (xs ++ ys).attach = xs.attach.map (fun ⟨x, h⟩ => (⟨x, mem_append_left ys h⟩ : { x // x ∈ xs ++ ys })) ++

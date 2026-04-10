@@ -26,11 +26,6 @@ theorem Iter.drop_eq {α β} [Iterator α Id β] {n : Nat}
     it.drop n = (it.toIterM.drop n).toIter :=
   rfl
 
-/-
-PLOG(step_drop):
-implicitized `IterM.drop`
--/
-
 theorem Iter.step_drop {α β} [Iterator α Id β] {n : Nat}
     {it : Iter (α := α) β} :
     (it.drop n).step = (match it.step with

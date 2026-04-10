@@ -2115,11 +2115,6 @@ theorem ushiftRight_eq_zero {x : BitVec w} {n : Nat} (hn : w ≤ n) :
   have : 2^w ≤ 2^n := Nat.pow_le_pow_of_le Nat.one_lt_two hn
   rw [Nat.shiftRight_eq_div_pow, Nat.div_eq_of_lt (by omega)]
 
-/-
-PLOG(toInt_ushiftRight_of_lt):
-Had to unrfl `toNat_ushiftRight`.
--/
-
 /--
 Unsigned shift right by at least one bit makes the interpretations of the bitvector as an `Int` or `Nat` agree,
 because it makes the value of the bitvector less than or equal to `2^(w-1)`.
@@ -4707,11 +4702,6 @@ theorem toFin_srem {x y : BitVec w} : (x.srem y).toFin =
   by_cases hx : x.msb <;> by_cases hy : y.msb <;> simp [hx, hy]
 
 /-! ### smod -/
-
-/-
-PLOG(smod_eq):
-Had to add `BitVec.zero_eq` because `BitVec.zero` and `0#w` (defined as `ofNat 0`) aren't defeq enough
--/
 
 /-- Equation theorem for `smod` in terms of `umod`. -/
 theorem smod_eq (x y : BitVec w) : x.smod y =

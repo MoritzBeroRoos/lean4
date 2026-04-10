@@ -1242,11 +1242,6 @@ theorem lt_floor {x : Rat} :
 # ceil
 -/
 
-/-
-PLOG(ceil_eq_neg_floor_neg):
-`-implicitDefEqProofs`
--/
-
 theorem ceil_eq_neg_floor_neg (a : Rat) : a.ceil = -((-a).floor) := by
   rw [Rat.ceil, Rat.floor]
   simp -implicitDefEqProofs only [neg_den, neg_num]

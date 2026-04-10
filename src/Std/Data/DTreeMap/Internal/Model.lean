@@ -1002,11 +1002,6 @@ def getEntryGT?ₘ' [Ord α] (k : α) (t : Impl α β) : Option ((a : α) × β 
   | base, .eq _ _ r => r.head?.or base
   | base, .gt _ _ _ _ => base
 
-/-
-PLOG(getEntryGT?_eq_getEntryGT?ₘ'):
-implicitized `Ordering.then`
--/
-
 theorem getEntryGT?_eq_getEntryGT?ₘ' [Ord α] (k : α) (t : Impl α β) :
     getEntryGT? k t = getEntryGT?ₘ' k t := by
   rw [getEntryGT?ₘ', getEntryGT?]

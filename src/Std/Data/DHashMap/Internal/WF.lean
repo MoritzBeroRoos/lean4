@@ -457,13 +457,6 @@ theorem getEntry?ₘ_eq_getEntry? [BEq α] [PartialEquivBEq α] [Hashable α] [L
     m.getEntry?ₘ a = List.getEntry? a (toListModel m.1.buckets) :=
   apply_bucket hm AssocList.getEntry?_eq getEntry?_of_perm getEntry?_append_of_containsKey_eq_false
 
-/-
-PLOG(get_eq_getValueCast):
-Exploits that `contains =?= containsₘ`.
-Implicitized `contains`.
-`containsₘ` was already implicit-reducible at this point.
--/
-
 theorem get_eq_getValueCast [BEq α] [Hashable α] [LawfulBEq α] {m : Raw₀ α β} (hm : Raw.WFImp m.1)
     {a : α} {h : m.contains a} :
     m.get a h = getValueCast a (toListModel m.1.buckets) (contains_eq_containsKey hm ▸ h) := by
