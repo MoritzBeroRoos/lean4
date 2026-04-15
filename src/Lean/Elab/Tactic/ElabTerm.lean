@@ -10,7 +10,8 @@ public import Lean.Meta.Tactic.Constructor
 public import Lean.Meta.Tactic.Assert
 public import Lean.Meta.Tactic.Cleanup
 public import Lean.Meta.Tactic.Rename
-public import Lean.Elab.Tactic.Config
+public import Lean.Elab.Tactic.Basic
+public import Lean.Elab.SyntheticMVars
 
 public section
 

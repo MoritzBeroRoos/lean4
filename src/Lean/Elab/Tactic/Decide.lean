@@ -9,6 +9,7 @@ prelude
 public import Lean.Elab.Tactic.Basic
 import Lean.Meta.Native
 import Lean.Elab.Tactic.ElabTerm
+import Lean.Elab.Tactic.Config
 
 public section
 

@@ -10,6 +10,7 @@ public import Lean.Meta.Tactic.Simp
 public import Lean.Meta.Tactic.Simp.LoopProtection
 public import Lean.Elab.BuiltinNotation
 public import Lean.Elab.Tactic.Location
+import Lean.Elab.Tactic.Config
 
 public section
 
@@ -17,9 +18,17 @@ namespace Lean.Elab.Tactic
 open Meta
 open TSyntax.Compat
 
-declare_config_elab elabSimpConfigCore    Meta.Simp.Config
-declare_config_elab elabSimpConfigCtxCore Meta.Simp.ConfigCtx
-declare_config_elab elabDSimpConfigCore   Meta.DSimp.Config
+declare_config_elab elabSimpConfigCore Meta.Simp.Config
+
+def elabSimpConfigCtxCore (optConfig : Syntax)
+    (initConfig : Simp.Config := {{ : Meta.Simp.ConfigCtx} with}) :
+    TacticM Simp.Config :=
+  elabSimpConfigCore optConfig initConfig
+
+def elabDSimpConfigCore (optConfig : Syntax)
+    (initConfig : Simp.Config := {{ : Meta.DSimp.Config} with}) :
+    TacticM Simp.Config :=
+  elabSimpConfigCore optConfig initConfig
 
 inductive SimpKind where
   | simp
@@ -89,8 +98,8 @@ private def mkDischargeWrapper (optDischargeSyntax : Syntax) : TacticM Simp.Disc
 def elabSimpConfig (optConfig : Syntax) (kind : SimpKind) : TacticM Meta.Simp.Config := do
   match kind with
     | .simp    => elabSimpConfigCore optConfig
-    | .simpAll => pure (← elabSimpConfigCtxCore optConfig).toConfig
-    | .dsimp   => pure { (← elabDSimpConfigCore optConfig) with }
+    | .simpAll => elabSimpConfigCtxCore optConfig
+    | .dsimp   => elabDSimpConfigCore optConfig
 
 inductive ResolveSimpIdResult where
   | none
