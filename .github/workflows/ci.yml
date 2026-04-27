@@ -219,15 +219,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
 
-      - name: Check self-hosted runner availability
-        id: runner-fallback
-        uses: mikehardy/runner-fallback-action@v1
-        with:
-          github-token: ${{ github.token }}
-          primary-runner: self-hosted,chonk
-          fallback-runner: nscloud-ubuntu-24.04-amd64-8x16
-          primaries-required: 1
-
       - name: Configure build matrix
         id: set-matrix
         uses: actions/github-script@v8
@@ -239,7 +230,7 @@ jobs:
             console.log(`level: ${level}, fast: ${fast}`);
             // use large runners where available (original repo)
             let large = ${{ github.repository == 'leanprover/lean4' }};
-            const chonk = ${{ steps.runner-fallback.outputs.use-runner }};
+            const chonk = ["self-hosted", "chonk"];
             const isPr = "${{ github.event_name }}" == "pull_request";
             const isPushToMaster = "${{ github.event_name }}" == "push" && "${{ github.ref_name }}" == "master";
             let matrix = [
